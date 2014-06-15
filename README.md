@@ -57,11 +57,12 @@ To display the full list of supported arguments, use '-h' or '--help'.
 
 # Example
 Retrieve all videos in the 'martyzsongs' Youtube channel that were published between 2014-01-01 and 2014-06-15. Once found, put the links in a file called 'result.txt'. Also, create a log file containing all the gory details of what the script has done:
+
 	$ py ./youtubeChannelVideosFinder.py 
-		-k ...  # the API key
-		-c martyzsongs # the channel name 
-		--date-from 2014-06-15 # last published videos we care about
-		--date-to 2014-01-01 # oldest published videos we care about
-		--log-file-path awesome.log # generate a log file
-		--output-file-path result.txt # put generated links in that file
-		-d # debug -> tell everything you're doing
+	-k ...  # the API key
+	-c martyzsongs # the channel name 
+	--date-from 2014-06-15 # last published videos we care about
+	--date-to 2014-01-01 # oldest published videos we care about
+	--log-file-path awesome.log # generate a log file
+	--output-file-path result.txt # put generated links in that file
+	-d # debug -> tell everything you're doing
