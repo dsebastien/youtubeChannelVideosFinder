@@ -263,8 +263,7 @@ def main():
 			log.debug('Video id: %s',videoId)
 			videoURL = getVideoURL(videoId)
 			videoURLs.append(videoURL) 
-		
-		if(args.outputFilePath is not None):
+		if(args.outputFilePath is not None and args.outputFilePath is not ''):
 			log.debug('File output enabled')
 			log.info('Links will be written to %s',args.outputFilePath)
 		
