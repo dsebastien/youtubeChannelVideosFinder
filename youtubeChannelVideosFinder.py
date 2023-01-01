@@ -5,6 +5,7 @@
 # Imports
 # ------------------------------------------
 import urllib
+import urllib.request
 import json
 import time
 import datetime
@@ -125,10 +126,10 @@ def getChannelId(channelName):
 		log.debug("Request: %s",url)
 		
 		log.debug('Sending request')
-		response = urllib.urlopen(url)
+		response = urllib.request.urlopen(url)
 		
 		log.debug('Parsing the response')
-		responseAsJson = json.load(response)
+		responseAsJson = json.loads(response.read().decode())
 
 		response.close()
 		
@@ -145,7 +146,7 @@ def getChannelId(channelName):
 			
 		if(responseAsJson['pageInfo'].get('totalResults') > 1):
 			log.debug('Multiple channels were received in the response. If this happens, something can probably be improved around here')
-	except Exception, err:
+	except Exception as err:
 		log.error('An exception occurred while trying to retrieve the channel id',exc_info=True)
 	
 	return retVal
@@ -163,10 +164,10 @@ def getChannelVideosPublishedInInterval(channelId,publishedBefore,publishedAfter
 			log.debug('Request: %s',url)
 			
 			log.debug('Sending request')
-			response = urllib.urlopen(url)
+			response = urllib.request.urlopen(url)
 			
 			log.debug('Parsing the response')
-			responseAsJson = json.load(response)
+			responseAsJson = json.loads(response.read().decode())
 			
 			response.close()
 			
@@ -179,10 +180,10 @@ def getChannelVideosPublishedInInterval(channelId,publishedBefore,publishedAfter
 			try:
 				nextPageToken = responseAsJson['nextPageToken']
 				log.info('More videos to load, continuing')
-			except Exception, err:
+			except Exception as err:
 				log.info('No more videos to load')
 				foundAll = True
-		except Exception, err:
+		except Exception as err:
 			log.error('An exception occurred while trying to retrieve a subset of the channel videos. Stopping search.',exc_info=True)
 			foundAll = True		
 	
@@ -263,14 +264,14 @@ def main():
 			log.debug('Video id: %s',videoId)
 			videoURL = getVideoURL(videoId)
 			videoURLs.append(videoURL) 
-		if(args.outputFilePath is not None and args.outputFilePath is not ''):
+		if(args.outputFilePath and args.outputFilePath != ''):
 			log.debug('File output enabled')
 			log.info('Links will be written to %s',args.outputFilePath)
 		
 			f = None
 			try:
 				f = open(args.outputFilePath,'w')
-			except Exception, err:
+			except Exception as err:
 				log.critical('Could not create/open the output file!',exc_info=True)
 				raise Exception('Impossible to write the links to the output file. Verify that the path is correct and that it is accessible/can be created/can be written to')
 			
@@ -280,9 +281,9 @@ def main():
 			f.close()
 		else:
 			for videoURL in videoURLs:
-				print videoURL
+				print(videoURL)
 		log.info('Done!')
-	except Exception, err:
+	except Exception as err:
 		log.critical('We tried our best but still..',exc_info=True)
 		sys.exit(2)
 
