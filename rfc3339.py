@@ -241,13 +241,13 @@ class LocalTimeTestCase(unittest.TestCase):
                           self.local_timezone))
 
     def test_before_1970(self):
-        d = datetime.date(1885, 01, 04)
+        d = datetime.date(1885, 1, 4)
         self.failUnless(rfc3339(d).startswith('1885-01-04T00:00:00'))
         self.assertEqual(rfc3339(d, utc=True, use_system_timezone=False),
                          '1885-01-04T00:00:00Z')
 
     def test_1920(self):
-        d = datetime.date(1920, 02, 29)
+        d = datetime.date(1920, 2, 29)
         x = rfc3339(d, utc=False, use_system_timezone=True)
         self.failUnless(x.startswith('1920-02-29T00:00:00'))
 
